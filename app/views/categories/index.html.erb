@@ -3,6 +3,7 @@
 <% @categories.each do |category| %>
   <li>
     <%= link_to category.name, category %>
+    <%= link_to '→', shuffle_category_links_path(category) %>
     <%= link_to 'x', category, :confirm => 'Are you sure?', :method => :delete %>
     </li>
 <% end %>
