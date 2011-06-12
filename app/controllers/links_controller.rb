@@ -46,7 +46,7 @@ class LinksController < ApplicationController
 
     respond_to do |format|
       if @link.save
-        format.html { redirect_to([@category, @link], :notice => 'Link was successfully created.') }
+        format.html { redirect_to(@link.category, :notice => 'Link was successfully created.') }
         format.xml  { render :xml => @link, :status => :created, :location => @link }
       else
         format.html { render :action => "new" }
@@ -60,7 +60,7 @@ class LinksController < ApplicationController
 
     respond_to do |format|
       if @link.update_attributes(params[:link])
-        format.html { redirect_to([@category, @link], :notice => 'Link was successfully updated.') }
+        format.html { redirect_to(@category, :notice => 'Link was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -71,10 +71,11 @@ class LinksController < ApplicationController
 
   def destroy
     @link = links.find(params[:id])
+    @category = link.category
     @link.destroy
 
     respond_to do |format|
-      format.html { redirect_to(category_links_url) }
+      format.html { redirect_to(@category) }
       format.xml  { head :ok }
     end
   end
