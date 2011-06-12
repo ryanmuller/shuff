@@ -1,10 +1,15 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @category.name %>
-</p>
+<h1><%= @category.name %></h1>
 
+<p><%= link_to 'Shuffle!', shuffle_category_links_path(@category) %></p>
+
+<ul>
+<%= render @category.links %>
+</ul>
+
+<h2>Add a link</h2>
+<%= render 'links/form' %>
 
 <%= link_to 'Edit', edit_category_path(@category) %> |
 <%= link_to 'Back', categories_path %>

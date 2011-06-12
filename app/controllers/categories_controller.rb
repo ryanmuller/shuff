@@ -14,6 +14,8 @@ class CategoriesController < ApplicationController
   # GET /categories/1.xml
   def show
     @category = Category.find(params[:id])
+    @link = Link.new
+    @link.category_id = @category
 
     respond_to do |format|
       format.html # show.html.erb
