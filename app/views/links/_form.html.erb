@@ -25,7 +25,8 @@
           options_from_collection_for_select(Category.all,
                                              :id,
                                              :name, 
-                                             @link.category_id),
+                                             @category.id),
+
                 { :include_blank => true }) %>
   </div>
   <div class="actions">

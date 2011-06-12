@@ -71,7 +71,7 @@ class LinksController < ApplicationController
 
   def destroy
     @link = links.find(params[:id])
-    @category = link.category
+    @category = @link.category
     @link.destroy
 
     respond_to do |format|
