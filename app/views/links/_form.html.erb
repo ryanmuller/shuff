@@ -19,16 +19,7 @@
     <%= f.label :url %><br />
     <%= f.text_field :url %>
   </div>
-  <div class="field">
-    <%= f.label :category %><br />
-    <%= f.select(:category_id,
-          options_from_collection_for_select(Category.all,
-                                             :id,
-                                             :name, 
-                                             @category.id),
 
-                { :include_blank => true }) %>
-  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
