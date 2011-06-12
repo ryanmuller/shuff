@@ -4,7 +4,6 @@ class LinksController < ApplicationController
   def index
     @links = links.all
     @title = @category ? @category.name : "Links"
-    @blah = params[:category_id] || "blah"
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,8 +14,12 @@ class LinksController < ApplicationController
   def shuffle 
     @links = links.all
 
-    choice = rand(@links.count)
-    redirect_to @links[choice].url
+    if @links.count == 0
+      redirect_to @category ? @category : root_path, :notice => "You need some links first!"
+    else
+      choice = rand(@links.count)
+      redirect_to @links[choice].url
+    end
   end
 
   def show
