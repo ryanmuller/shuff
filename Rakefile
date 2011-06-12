@@ -4,4 +4,11 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
+module Shuff
+  class Application
+    include Rake::DSL
+  end
+end
+
+
 Shuff::Application.load_tasks
