@@ -6,4 +6,6 @@ Shuff::Application.routes.draw do
       end
     end
   end
+
+  root :to => 'categories#index'
 end
