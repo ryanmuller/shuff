@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110612203239) do
+ActiveRecord::Schema.define(:version => 20110613075015) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -26,5 +26,18 @@ ActiveRecord::Schema.define(:version => 20110612203239) do
   end
 
   add_index "links", ["category_id"], :name => "index_links_on_category_id"
+
+  create_table "users", :force => true do |t|
+    t.string   "email"
+    t.string   "encrypted_password", :limit => 128
+    t.string   "salt",               :limit => 128
+    t.string   "confirmation_token", :limit => 128
+    t.string   "remember_token",     :limit => 128
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["email"], :name => "index_users_on_email"
+  add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
 
 end
