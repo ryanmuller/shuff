@@ -1,16 +1,6 @@
 class LinksController < ApplicationController
 before_filter :grab_category_from_category_id
 
-  def index
-    @links = links.all
-    @title = @category ? @category.name : "Links"
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @links }
-    end
-  end
-
   def shuffle 
     @links = links.all
 
@@ -20,28 +10,6 @@ before_filter :grab_category_from_category_id
       choice = rand(@links.count)
       redirect_to @links[choice].url
     end
-  end
-
-  def show
-    @link = links.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @link }
-    end
-  end
-
-  def new
-    @link = links.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @link }
-    end
-  end
-
-  def edit
-    @link = links.find(params[:id])
   end
 
   def create
@@ -54,20 +22,6 @@ before_filter :grab_category_from_category_id
         format.xml  { render :xml => @link, :status => :created, :location => @link }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  def update
-    @link = links.find(params[:id])
-
-    respond_to do |format|
-      if @link.update_attributes(params[:link])
-        format.html { redirect_to(@category, :notice => 'Link was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
         format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
       end
     end
