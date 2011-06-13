@@ -33,7 +33,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
-    @category = Category.find(params[:id])
+    @category = current_user.categories.find(params[:id])
   end
 
   # POST /categories
@@ -46,7 +46,8 @@ class CategoriesController < ApplicationController
         format.html { redirect_to(@category, :notice => 'Category was successfully created.') }
         format.xml  { render :xml => @category, :status => :created, :location => @category }
       else
-        format.html { render :action => "new" }
+        @categories = current_user.categories
+        format.html { render "index" }
         format.xml  { render :xml => @category.errors, :status => :unprocessable_entity }
       end
     end

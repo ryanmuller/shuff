@@ -1,11 +1,12 @@
 <h1>Shuff!</h1>
 <ul>
 <% @categories.each do |category| %>
+  <% next if category.id.nil? %>
   <li>
     <%= link_to category.name, category %>
     <%= link_to '→', shuffle_category_links_path(category) %>
     <%= link_to 'x', category, :confirm => 'Are you sure?', :method => :delete %>
-    </li>
+  </li>
 <% end %>
 </ul>
 

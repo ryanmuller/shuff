@@ -20,7 +20,7 @@ before_filter :grab_category_from_category_id
         format.html { redirect_to(@link.category, :notice => 'Link was successfully created.') }
         format.xml  { render :xml => @link, :status => :created, :location => @link }
       else
-        format.html { render :action => "new" }
+        format.html { render "categories/show" }
         format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
       end
     end
