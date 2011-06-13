@@ -1,8 +1,15 @@
 class CategoriesController < ApplicationController
+  before_filter :authorize, :except => [ :index ]
+  
   # GET /categories
   # GET /categories.xml
   def index
-    @categories = Category.all
+    if current_user.nil?
+      redirect_to sign_in_path
+      return 
+    end
+      
+    @categories = current_user.categories
     @category = Category.new
     
     respond_to do |format|
@@ -14,7 +21,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.xml
   def show
-    @category = Category.find(params[:id])
+    @category = current_user.categories.find(params[:id])
     @link = Link.new
     @link.category_id = @category
 
@@ -43,7 +50,7 @@ class CategoriesController < ApplicationController
   # POST /categories
   # POST /categories.xml
   def create
-    @category = Category.new(params[:category])
+    @category = current_user.categories.build(params[:category])
 
     respond_to do |format|
       if @category.save

@@ -1,5 +1,5 @@
 class LinksController < ApplicationController
-  before_filter :grab_category_from_category_id
+before_filter :grab_category_from_category_id
 
   def index
     @links = links.all
@@ -45,7 +45,8 @@ class LinksController < ApplicationController
   end
 
   def create
-    @link = links.new(params[:link])
+    @link = links.build(params[:link])
+    @link.user_id = current_user
 
     respond_to do |format|
       if @link.save
