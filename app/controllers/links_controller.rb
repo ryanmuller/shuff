@@ -14,7 +14,6 @@ before_filter :grab_category_from_category_id
 
   def create
     @link = links.build(params[:link])
-    @link.user_id = current_user
 
     respond_to do |format|
       if @link.save

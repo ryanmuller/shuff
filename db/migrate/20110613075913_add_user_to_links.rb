@@ -5,7 +5,7 @@ class AddUserToLinks < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :links, :user_id
     remove_index :links, :user_id
+    remove_column :links, :user_id
   end
 end
