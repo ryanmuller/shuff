@@ -7,8 +7,7 @@ before_filter :grab_category_from_category_id
     if @links.count == 0
       redirect_to @category ? @category : root_path, :notice => "You need some links first!"
     else
-      choice = rand(@links.count)
-      redirect_to @links[choice].url
+      @link = @links[rand(@links.count)]
     end
   end
 

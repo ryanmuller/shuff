@@ -1,0 +1,10 @@
+<script type="text/javascript">
+var redirectToUrl = function() {
+  window.location.replace("<%= @link.url %>");
+};
+
+window.onload = redirectToUrl;
+  
+</script>
+
+<a id="link" href="<%= @link.url %>"><%= @link.url %></a>
