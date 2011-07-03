@@ -1,6 +1,6 @@
 <% if link.id %>
 <li>
 <%= link_to link.url, link.url %>
-<%= link_to 'x', [@category, link], :confirm => 'Are you sure?', :method => :delete %>
+<%= button_to 'x', category_link_path(@category, link, {:action => :destroy}), :method => :delete, :confirm => 'Are you sure?'  %>
 </li>
 <% end %>
