@@ -1,8 +1,22 @@
+<script type="text/javascript">
+$(document).ready(function() {
+$("#timer").keyup(function() {
+  var time = $("#timer").val();
+  if (time == "") 
+    return;
+  var old = $("#shuffle").attr("href");
+  $("#shuffle").attr("href", old.replace(/=(.*)/,"="+time)); 
+});
+});
+</script>
+
+
+
 <p id="notice"><%= notice %></p>
 
 <h1><%= @category.name %></h1>
 
-<p><%= link_to 'Shuffle!', shuffle_category_links_path(@category) %></p>
+<p><%= link_to 'Shuffle!', shuffle_category_links_path(@category, :timer => ""), :id => "shuffle" %> Set timer for <input type="text" size="2" id="timer" /> minutes</p>
 
 <ul>
 <%= render @category.links %>

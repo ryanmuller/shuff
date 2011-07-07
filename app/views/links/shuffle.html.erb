@@ -1,10 +1,30 @@
 <script type="text/javascript">
-var redirectToUrl = function() {
-  window.location.replace("<%= @link.url %>");
-};
+$(document).ready(function() {
+    var cmds = $("#link").text().split(";");
+    var cmd = $("#link").text();
+    var prot = cmd.split(":")[0];
+    if (prot == "javascript" || prot == "j") {
+      eval(cmd.slice(cmd.indexOf(":")+1));
+    } else {
+      window.location.replace("<%= @link.url %>");
+    }
 
-window.onload = redirectToUrl;
-  
+    if (gup("timer") != "") {
+      window.open("http://e.ggtimer.com/"+gup("timer")+"%20minutes");
+    }
+});
+
+function gup( name )
+{
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  if( results == null )
+    return "";
+  else
+    return results[1];
+}
 </script>
 
 <a id="link" href="<%= @link.url %>"><%= @link.url %></a>
