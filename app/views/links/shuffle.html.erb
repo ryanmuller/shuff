@@ -5,7 +5,6 @@ $(document).ready(main);
 function main()
 {
   var url = $("#link").text();
-  console.log(url);
 
   if (url.match(/^http:\/\/.*\/categories\/(\d+)\/links\/shuffle\/?/)) {
     console.log(RegExp.$1);
