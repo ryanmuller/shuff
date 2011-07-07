@@ -1,4 +1,4 @@
-<h1>Shuff!</h1>
+<div id="container"><h1>Shuff!</h1>
 <ul>
 <% @categories.each do |category| %>
   <% next if category.id.nil? %>
@@ -14,3 +14,4 @@
 <%= render 'form' %>
 
 <p><%= link_to 'Sign out', sign_out_path, :method => :delete %></p>
+</div>

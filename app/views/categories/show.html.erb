@@ -11,12 +11,12 @@ $("#timer").keyup(function() {
 </script>
 
 
-
+<div id="container">
 <p id="notice"><%= notice %></p>
 
 <h1><%= @category.name %></h1>
 
-<p><%= link_to 'Shuffle!', shuffle_category_links_path(@category, :timer => ""), :id => "shuffle" %> Set timer for <input type="text" size="2" id="timer" /> minutes</p>
+<p><%= link_to 'Shuffle!', shuffle_category_links_path(@category, :timer => ""), :id => "shuffle" %> Set timer for <input type="text" size="2" id="timer" />s</p>
 
 <ul>
 <%= render @category.links %>
@@ -27,3 +27,4 @@ $("#timer").keyup(function() {
 
 <%= link_to 'Edit', edit_category_path(@category) %> |
 <%= link_to 'Back', categories_path %>
+</div>

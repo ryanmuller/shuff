@@ -1,18 +1,80 @@
 <script type="text/javascript">
-$(document).ready(function() {
-    var cmds = $("#link").text().split(";");
-    var cmd = $("#link").text();
-    var prot = cmd.split(":")[0];
-    if (prot == "javascript" || prot == "j") {
-      eval(cmd.slice(cmd.indexOf(":")+1));
-    } else {
-      window.location.replace("<%= @link.url %>");
-    }
 
-    if (gup("timer") != "") {
-      window.open("http://e.ggtimer.com/"+gup("timer")+"%20minutes");
+$(document).ready(main);
+
+function main()
+{
+  var url = $("#link").text();
+  console.log(url);
+
+  if (url.match(/^http:\/\/.*\/categories\/(\d+)\/links\/shuffle\/?/)) {
+    console.log(RegExp.$1);
+    if (RegExp.$1 == "<%= @link.category.id %>") return;
+    if (!url.match(/timer=\d+/))
+      url = url + "?timer=" + gup("timer");
+    window.location.replace(url);
+  } else if (url.match(/^(javascript|j):.*/)) {
+    eval(url.slice(url.indexOf(":")+1));
+  } else if (url.match(/^http:\/\//)) {
+    $('iframe').attr('src', url);
+  } else if (url.match(/^#/)) {
+    $("#toolbar").after($("<h1>").text(url.slice(1)).addClass("note"));
+  }
+
+  resizeIframe(); 
+
+  timer = null;
+
+  if (gup('timer') != "") {
+    var time = parseInt(gup('timer'));
+    $("#timer").text(time);
+    timer = setInterval(function() { countdown(time-1); }, 1000);
+  }
+
+
+  $("#set-timer").click(function() { 
+     var time = parseInt($("#set-time").val());
+     clearInterval(timer);
+     $("#timer").text(time);
+     timer = setInterval(function() { countdown(time-1); }, 1000);
+     return false;
+  });
+
+  $("#clear-timer").click(function() {
+     clearInterval(timer);
+     $("#timer").text("");
+     return false;
+   }); 
+}
+
+function countdown(init_time) {
+  
+  if ($("#timer").text() == "" || $("#timer").text() == "0") {
+    $("#timer").text(init_time);
+  } else {
+    var oldTime = parseInt($("#timer").text());
+    if (oldTime == 1) {
+      $("#timer").text("0");
+      alert("Time up!");
+      clearInterval(timer);
     }
-});
+    $("#timer").text(oldTime - 1);
+  }
+
+  var shuffurl = $("#shuff").attr("href");
+  var shufftime = $("#timer").text() == "0" ? "" : $("#timer").text();
+  shuffurl = shuffurl.replace(/timer=\d*/,"timer="+shufftime);
+  $("#shuff").attr("href", shuffurl);
+}
+
+
+
+function resizeIframe()
+{
+  $("#iframe").height( $("document").height() - $("#toolbar").innerHeight() );
+}
+
+$(window).resize( function() {resizeIframe();} );
 
 function gup( name )
 {
@@ -25,6 +87,19 @@ function gup( name )
   else
     return results[1];
 }
-</script>
 
-<a id="link" href="<%= @link.url %>"><%= @link.url %></a>
+</script>
+<style text="text/css">
+html {overflow: hidden;} /*we don't need any scrolls for our html */
+</style>
+
+<div id="toolbar">
+  <%= link_to "Shuff!", shuffle_category_links_path(@link.category, :timer => ""), :id => "shuff" %>
+  | Shuff'd to: <%= link_to @link.url, @link.url, :id => "link" %>
+  | Timer: <span id="timer"></span> <input type="text" id="set-time" size="2" />s <a href="#" id="set-timer">set</a> <a href="#" id="clear-timer">clear</a>
+  | <span id="home"><%= link_to "Home", root_path %></span>
+</div>
+<div id="iframe">
+  <iframe src="" />
+</div>
+
