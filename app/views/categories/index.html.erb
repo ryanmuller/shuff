@@ -5,7 +5,7 @@
   <li>
     <%= link_to category.name, category %>
     <%= link_to '→', shuffle_category_links_path(category) %>
-    <%= link_to 'x', category, :confirm => 'Are you sure?', :method => :delete %>
+    <%= button_to 'x', category, { :method => :delete, :confirm => "Are you sure?" } %>
   </li>
 <% end %>
 </ul>
