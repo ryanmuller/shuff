@@ -7,5 +7,6 @@ Shuff::Application.routes.draw do
     end
   end
 
+  match "/shuffle/:course_id" => "links#shuffle"
   root :to => 'categories#index'
 end
