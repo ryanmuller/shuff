@@ -6,10 +6,9 @@ function main()
 {
   var url = $("#link").text();
 
-  if (url.match(/^http:\/\/.*\/categories\/(\d+)\/links\/shuffle\/?/)) {
+  if (url.match(/^(http:\/\/.*)?\/categories\/(\d+)\/links\/shuffle/) || url.match(/^(http:\/\/.*)?\/shuffle\/(\d+)/)) {
     // redirect to another shuffle, preserving timer
-    console.log(RegExp.$1);
-    if (RegExp.$1 == "<%= @link.category.id %>") return;
+    if (RegExp.$2 == "<%= @link.category.id %>") return;
     if (!url.match(/timer=\d+/))
       url = url + "?timer=" + gup("timer");
     window.location.replace(url);
@@ -94,7 +93,6 @@ var getDocHeight = function(){
 
 function resizeIframe()
 {
-console.log(getDocHeight());
   $("#iframe").height( getDocHeight() - $("#toolbar").innerHeight() );
   $("#player").height( getDocHeight() - $("#toolbar").innerHeight() );
 }
