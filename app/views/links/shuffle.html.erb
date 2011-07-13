@@ -108,18 +108,13 @@ function gup( name )
     return results[1];
 }
 
-getYouTubeId = function(url) {
-  var urlparts = url.split('?');
-  if (urlparts.length > 1) {
-    var parameters = urlparts[1].split('&');
-    for (var i = 0; i < parameters.length; i++) {
-      var paramparts = parameters[i].split('=');
-      if (paramparts.length > 1 && unescape(paramparts[0]) == "v") {
-        return unescape(paramparts[1]);
-      }
-    }
-  }
-  return null;
+var getYouTubeId = function(url) {
+  var regex = new RegExp("v=([^&#]*)");
+  var results = regex.exec(url);
+  if (results == null)
+    return "";
+  else
+    return results[1];
 };
 
 function onYouTubePlayerAPIReady() {
