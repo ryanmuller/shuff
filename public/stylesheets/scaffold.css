@@ -112,11 +112,40 @@ h1.note {
   color: #fff;
 }
 
-#set-time {
+#set-timer {
   padding: 0px;
   margin: 0px;
   background: #334;
-  color: #ccc;
+  color: #999;
+  border: 1px solid #999;
+}
+
+  
+
+#timer a {
+  color: #666;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+#timer a:visited {
+  text-decoration: none;
+}
+
+#timer a:hover {
+  color: #999;
+}
+
+#timer-head {
+  display: inline;
+  min-width: 16px;
+  min-height: 16px;
+  background-image: url(images/home_16x16.png);
+}
+
+#toolbar img {
+  margin-bottom: -3px;
+  margin-right: 5px;
 }
 
 
@@ -128,4 +157,5 @@ h1.note {
   height: 100%;
   background: #224;
 }
+
 

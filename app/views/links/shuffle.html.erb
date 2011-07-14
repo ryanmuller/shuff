@@ -38,41 +38,63 @@ function main()
 
   if (gup('timer') != "") {
     var time = parseInt(gup('timer'));
-    $("#timer").text(time);
-    timer = setInterval(function() { countdown(time-1); }, 1000);
+    setTimer(time);
+  } else {
+    $("#clear-timer").hide();
   }
 
-  $("#set-timer").click(function() { 
-     var time = parseInt($("#set-time").val());
-     clearInterval(timer);
-     $("#timer").text(time);
-     timer = setInterval(function() { countdown(time-1); }, 1000);
-     return false;
+  $("#set-timer").blur(function() {
+    if($("#set-timer").val() != "")
+      setTimer(parseInt($("#set-timer").val()));
+    return false;
   });
+
+  $("#set-timer").keyup(function(e) {
+    var code = (e.keyCode ? e.keyCode : e.which);
+    if (code == 27) $("#set-timer").val(""); 
+    if (code == 13 && $("#set-timer").val() != "")
+      setTimer(parseInt($("#set-timer").val()));
+    return false;
+  });
+
 
   $("#clear-timer").click(function() {
      clearInterval(timer);
-     $("#timer").text("");
+     $("#timer-text").text("");
+     $("#set-timer").show();
+     $("#clear-timer").hide();
      return false;
    }); 
 }
 
+function setTimer(time) {
+   clearInterval(timer);
+   $("#timer-text").text(time);
+   timer = setInterval(function() { countdown(time-1); }, 1000);
+   $("#set-timer").hide();
+   $("#clear-timer").show();
+} 
+
 function countdown(init_time) {
   
-  if ($("#timer").text() == "" || $("#timer").text() == "0") {
-    $("#timer").text(init_time);
+  if ($("#timer-text").text() == "" || $("#timer-text").text() == "0") {
+    $("#timer-text").text("");
+    return;
   } else {
-    var oldTime = parseInt($("#timer").text());
+    var oldTime = parseInt($("#timer-text").text());
     if (oldTime == 1) {
-      $("#timer").text("0");
       alert("Time up!");
       clearInterval(timer);
+      $("#timer-text").text("");
+      $("#set-timer").show();
+      $("#clear-timer").hide();
+    } else {
+      $("#timer-text").text(oldTime - 1);
     }
-    $("#timer").text(oldTime - 1);
   }
 
   var shuffurl = $("#shuff").attr("href");
-  var shufftime = $("#timer").text() == "0" ? "" : $("#timer").text();
+  var shufftime = $("#timer-text").text() == "0" ? "" : $("#timer-text").text();
   shuffurl = shuffurl.replace(/timer=\d*/,"timer="+shufftime);
   $("#shuff").attr("href", shuffurl);
 }
@@ -141,17 +163,20 @@ html {overflow: hidden;} /*we don't need any scrolls for our html */
 <div id="toolbar">
   <ul id="toolbar-items">
     <li>
-    <%= link_to "Shuff!", shuffle_category_links_path(@link.category, :timer => ""), :id => "shuff" %>
+    <a href="<%= shuffle_category_links_path(@link.category, :timer => "") %>" id="shuff"><%= image_tag "loop_16x16.png" %></a>
     </li>
     | <li>
-    <span class="toolbar-item">Shuff'd to: <%= link_to @link.url, @link.url, :id => "link" %></span>
+    <%= link_to @link.url, @link.url, :id => "link" %>
     <%= render :partial => 'delete', :locals => { :link => @link, :remote => true } %>
     </li>
     | <li>
-    Timer: <span id="timer"></span> <input type="text" id="set-time" size="2" />s <a href="#" id="set-timer">set</a> <a href="#" id="clear-timer">clear</a>
+    <%= image_tag "clock_16x16.png" %>
+    <span id="timer">
+      <span id="timer-text"></span>
+      <input type="text" id="set-timer" size="2" /><a href="#" id="clear-timer">x</a></span>
     </li>
     | <li>
-    <span id="home"><%= link_to "Home", root_path %></span>
+    <a href="/"><%= image_tag "home_16x16.png" %></a>
     </li>
   </ul>
 </div>
