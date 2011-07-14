@@ -33,6 +33,7 @@ before_filter :grab_category_from_category_id
     respond_to do |format|
       format.html { redirect_to(@category) }
       format.xml  { head :ok }
+      format.js  
     end
   end
 

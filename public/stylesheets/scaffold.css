@@ -65,6 +65,15 @@ div.field, div.actions {
 .button_to div {
   display: inline;
 }
+.button_to input {
+  background: transparent;
+  border: 0px none;
+  color: #ccc;
+}
+.button_to input:hover {
+  color: #ddd;
+  cursor: pointer;
+}
 
 
 

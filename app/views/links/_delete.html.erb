@@ -1,0 +1,2 @@
+<% remote ||= false %>
+<%= button_to 'x', category_link_path(link.category, link, {:action => :destroy}), { :method => :delete, :remote => remote, :confirm => "Are you sure?" } %>

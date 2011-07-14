@@ -140,7 +140,8 @@ html {overflow: hidden;} /*we don't need any scrolls for our html */
 
 <div id="toolbar">
   <%= link_to "Shuff!", shuffle_category_links_path(@link.category, :timer => ""), :id => "shuff" %>
-  | Shuff'd to: <%= link_to @link.url, @link.url, :id => "link" %>
+  | <span class="toolbar-item">Shuff'd to: <%= link_to @link.url, @link.url, :id => "link" %></span>
+  <%= render :partial => 'delete', :locals => { :link => @link, :remote => true } %>
   | Timer: <span id="timer"></span> <input type="text" id="set-time" size="2" />s <a href="#" id="set-timer">set</a> <a href="#" id="clear-timer">clear</a>
   | <span id="home"><%= link_to "Home", root_path %></span>
 </div>

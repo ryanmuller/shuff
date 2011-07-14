@@ -1,0 +1,6 @@
+<% if link.id %>
+<li>
+<%= link_to link.url, link.url %>
+<%= render :partial => 'links/delete', :locals => { :link => link } %>
+</li>
+<% end %>
